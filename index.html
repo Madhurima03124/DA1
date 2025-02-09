@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG Goals - Tamil Nadu Progress</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+   <style>
+    /* Global Styles and Variables */
+:root {
+    --primary-bg: #f5f7fa;
+    --header-bg: #e3f2fd;
+    --card-bg: #ffffff;
+    --text-primary: #2c3e50;
+    --text-secondary: #34495e;
+    --accent-1: #a8e6cf;
+    --accent-2: #dcedc1;
+    --accent-3: #ffd3b6;
+    --accent-4: #ffaaa5;
+    --shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+/* Base Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--primary-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+/* Header Styles */
+header {
+    background-color: var(--header-bg);
+    padding: 2rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+    animation: fadeInDown 0.8s ease-out;
+}
+
+header h1 {
+    color: var(--text-primary);
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+header p {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+/* Navigation Styles */
+nav {
+    background-color: var(--card-bg);
+    padding: 1rem;
+    box-shadow: var(--shadow);
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    background-color: var(--accent-1);
+    transform: translateY(-2px);
+}
+
+/* SDG Grid Layout */
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.sdg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+/* SDG Card Styles */
+.sdg-card {
+    background-color: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.sdg-card:hover {
+    transform: translateY(-5px);
+    box-shadow: rgba(149, 157, 165, 0.4) 0px 12px 28px;
+}
+
+.sdg-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    transition: transform 0.3s ease;
+}
+
+.sdg-card:hover .sdg-icon {
+    transform: scale(1.1);
+}
+
+.sdg-card h2 {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+}
+
+.sdg-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* Initiative Section Styles */
+.tn-initiatives-section {
+    background-color: var(--accent-2);
+    padding: 3rem 1rem;
+}
+
+.tn-initiatives-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.tn-initiatives-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+}
+
+.initiatives-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.initiative-card {
+    background-color: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease;
+}
+
+.initiative-card:hover {
+    transform: translateY(-5px);
+}
+
+.initiative-icon {
+    font-size: 2rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.initiative-card h3 {
+    color: var(--text-primary);
+    margin: 0.5rem 0;
+}
+
+.initiative-card .details {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* CTA Button Styles */
+.cta-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: var(--accent-4);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.cta-button:hover {
+    background-color: var(--accent-3);
+    transform: translateY(-2px);
+}
+
+/* Footer Styles */
+footer {
+    background-color: var(--header-bg);
+    padding: 1rem;
+    text-align: center;
+    color: var(--text-secondary);
+    margin-top: 2rem;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .sdg-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .initiatives-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.sdg4-button {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.8rem 1.5rem;
+    background-color: #e3f2fd;
+    border: 2px solid #2c3e50;
+    color: #2c3e50;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+}
+
+.sdg4-button:hover {
+    background-color: #2c3e50;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.sdg4-button i {
+    margin-right: 8px;
+}
+
+/* Additional color variations for SDG cards */
+.sdg-1 { background-color: #fce4ec; }
+.sdg-2 { background-color: #f3e5f5; }
+.sdg-3 { background-color: #e8eaf6; }
+.sdg-4 { background-color: #e3f2fd; }
+.sdg-5 { background-color: #e0f7fa; }
+.sdg-6 { background-color: #e0f2f1; }
+.sdg-7 { background-color: #f1f8e9; }
+.sdg-8 { background-color: #f9fbe7; }
+.sdg-9 { background-color: #fff3e0; }
+.sdg-10 { background-color: #fbe9e7; }
+.sdg-11 { background-color: #efebe9; }
+.sdg-12 { background-color: #fafafa; }
+.sdg-13 { background-color: #e8f5e9; }
+.sdg-14 { background-color: #e1f5fe; }
+.sdg-15 { background-color: #e8f5e9; }
+.sdg-16 { background-color: #fff3e0; }
+.sdg-17 { background-color: #f3e5f5; }
+   </style>
+</head>
+<body>
+    <header>
+        <h1>Sustainable Development Goals</h1>
+        <p>Tracking Progress in Tamil Nadu</p>
+        <a href="sdg4.html" class="sdg4-button">
+            <i class="fas fa-graduation-cap"></i>
+            SDG4: Quality Education
+        </a>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#goals">SDG Goals</a></li>
+            <li><a href="https://tnsdg.tn.gov.in/" target="_blank">Tamil Nadu Initiatives</a></li>
+            <li><a href="https://tn.data.gov.in/" target="_blank">Resources</a></li>
+            <li><a href="https://www.tn.gov.in/contact_directory.php" target="_blank">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <section id="goals" class="container">
+            <div class="sdg-grid">
+                <a href="https://sdgs.un.org/goals/goal1" target="_blank" class="sdg-card sdg-1">
+                    <i class="fas fa-hand-holding-heart sdg-icon"></i>
+                    <h2>SDG 1: No Poverty</h2>
+                    <p>End poverty in all its forms everywhere in Tamil Nadu through targeted interventions and social welfare schemes.</p>
+                </a>
+
+                <a href="https://sdgs.un.org/goals/goal2" target="_blank" class="sdg-card sdg-2">
+                    <i class="fas fa-wheat-awn sdg-icon"></i>
+                    <h2>SDG 2: Zero Hunger</h2>
+                    <p>Achieve food security, improve nutrition and promote sustainable agriculture across the state.</p>
+                </a>
+
+                <a href="https://sdgs.un.org/goals/goal3" target="_blank" class="sdg-card sdg-3">
+                    <i class="fas fa-heart-pulse sdg-icon"></i>
+                    <h2>SDG 3: Good Health and Well-being</h2>
+                    <p>Ensure healthy lives and promote well-being for all ages through healthcare initiatives.</p>
+                </a>
+
+                <a href="https://sdgs.un.org/goals/goal4" target="_blank" class="sdg-card sdg-4">
+                    <i class="fas fa-graduation-cap sdg-icon"></i>
+                    <h2>SDG 4: Quality Education</h2>
+                    <p>Ensure inclusive and equitable quality education and promote lifelong learning opportunities.</p>
+                </a>
+
+                <a href="https://sdgs.un.org/goals/goal5" target="_blank" class="sdg-card sdg-5">
+                    <i class="fas fa-venus-mars sdg-icon"></i>
+                    <h2>SDG 5: Gender Equality</h2>
+                    <p>Achieve gender equality and empower all women and girls in Tamil Nadu.</p>
+                </a>
+
+                <a href="https://sdgs.un.org/goals/goal6" target="_blank" class="sdg-card sdg-6">
+                    <i class="fas fa-water sdg-icon"></i>
+                    <h2>SDG 6: Clean Water and Sanitation</h2>
+                    <p>Ensure availability and sustainable management of water and sanitation for all.</p>
+                </a>
+
+                <a href="https://sdgs.un.org/goals/goal7" target="_blank" class="sdg-card sdg-7">
+                    <i class="fas fa-solar-panel sdg-icon"></i>
+                    <h2>SDG 7: Affordable and Clean Energy</h2>
+                    <p>Ensure access to affordable, reliable, sustainable and modern energy for all.</p>
+                </a>
+
+                <a href="https://sdgs.un.org/goals/goal8" target="_blank" class="sdg-card sdg-8">
+                    <i class="fas fa-chart-line sdg-icon"></i>
+                    <h2>SDG 8: Decent Work and Economic Growth</h2>
+                    <p>Promote sustained, inclusive economic growth, full employment and decent work.</p>
+                </a>
+
+                <a href="https://sdgs.un.org/goals/goal9" target="_blank" class="sdg-card sdg-9">
+                    <i class="fas fa-industry sdg-icon"></i>
+                    <h2>SDG 9: Industry, Innovation and Infrastructure</h2>
+                    <p>Build resilient infrastructure, promote inclusive industrialization and foster innovation.</p>
+                </a>
+
+                <a href="https://sdgs.un.org/goals/goal10" target="_blank" class="sdg-card sdg-10">
+                    <i class="fas fa-equals sdg-icon"></i>
+                    <h2>SDG 10: Reduced Inequalities</h2>
+                    <p>Reduce inequality within and among communities in Tamil Nadu.</p>
+                </a>
+
+                <a href="https://sdgs.un.org/goals/goal11" target="_blank" class="sdg-card sdg-11">
+                    <i class="fas fa-city sdg-icon"></i>
+                    <h2>SDG 11: Sustainable Cities and Communities</h2>
+                    <p>Make cities and human settlements inclusive, safe, resilient and sustainable.</p>
+                </a>
+
+                <a href="https://sdgs.un.org/goals/goal12" target="_blank" class="sdg-card sdg-12">
+                    <i class="fas fa-recycle sdg-icon"></i>
+                    <h2>SDG 12: Responsible Consumption and Production</h2>
+                    <p>Ensure sustainable consumption and production patterns.</p>
+                </a>
+
+                <a href="https://sdgs.un.org/goals/goal13" target="_blank" class="sdg-card sdg-13">
+                    <i class="fas fa-cloud-sun sdg-icon"></i>
+                    <h2>SDG 13: Climate Action</h2>
+                    <p>Take urgent action to combat climate change and its impacts in Tamil Nadu.</p>
+                </a>
+
+                <a href="https://sdgs.un.org/goals/goal14" target="_blank" class="sdg-card sdg-14">
+                    <i class="fas fa-fish sdg-icon"></i>
+                    <h2>SDG 14: Life Below Water</h2>
+                    <p>Conserve and sustainably use marine resources for sustainable development.</p>
+                </a>
+
+                <a href="https://sdgs.un.org/goals/goal15" target="_blank" class="sdg-card sdg-15">
+                    <i class="fas fa-tree sdg-icon"></i>
+                    <h2>SDG 15: Life on Land</h2>
+                    <p>Protect, restore and promote sustainable use of terrestrial ecosystems.</p>
+                </a>
+
+                <a href="https://sdgs.un.org/goals/goal16" target="_blank" class="sdg-card sdg-16">
+                    <i class="fas fa-scale-balanced sdg-icon"></i>
+                    <h2>SDG 16: Peace, Justice and Strong Institutions</h2>
+                    <p>Promote peaceful and inclusive societies, access to justice, and effective institutions.</p>
+                </a>
+
+                <a href="https://sdgs.un.org/goals/goal17" target="_blank" class="sdg-card sdg-17">
+                    <i class="fas fa-handshake sdg-icon"></i>
+                    <h2>SDG 17: Partnerships for the Goals</h2>
+                    <p>Strengthen the means of implementation and revitalize global partnerships.</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <section class="tn-initiatives-section">
+        <div class="tn-initiatives-container">
+            <h2 class="tn-initiatives-title">Tamil Nadu Initiatives</h2>
+            
+            <div class="initiatives-grid">
+                <div class="initiative-card">
+                    <i class="fas fa-book-reader initiative-icon"></i>
+                    <h3>Education Initiatives</h3>
+                    <p>Comprehensive educational programs focusing on quality and accessibility.</p>
+                    <div class="details">
+                        • Free Education Scheme<br>
+                        • Digital Learning Platform<br>
+                        • Smart Classrooms<br>
+                        • Breakfast Scheme
+                    </div>
+                </div>
+
+                <div class="initiative-card">
+                    <i class="fas fa-heartbeat initiative-icon"></i>
+                    <h3>Healthcare Programs</h3>
+                    <p>Advanced healthcare infrastructure and welfare schemes.</p>
+                    <div class="details">
+                        • Chief Minister's Health Insurance<br>
+                        • Mobile Medical Units<br>
+                        • Maternal Care Program<br>
+                        • Rural Health Centers
+                    </div>
+                </div>
+
+                <div class="initiative-card">
+                    <i class="fas fa-seedling initiative-icon"></i>
+                    <h3>Agricultural Support</h3>
+                    <p>Supporting farmers with modern techniques and welfare schemes.</p>
+                    <div class="details">
+                        • Crop Insurance<br>
+                        • Modern Farming Equipment<br>
+                        • Organic Farming Support<br>
+                        • Water Management
+                    </div>
+                </div>
+
+                <div class="initiative-card">
+                    <i class="fas fa-industry initiative-icon"></i>
+                    <h3>Industrial Development</h3>
+                    <p>Boosting industrial growth and entrepreneurship.</p>
+                    <div class="details">
+                        • MSME Support<br>
+                        • Startup TN<br>
+                        • Skill Development<br>
+                        • Industrial Parks
+                    </div>
+                </div>
+
+                <div class="initiative-card">
+                    <i class="fas fa-hands-helping initiative-icon"></i>
+                    <h3>Social Welfare</h3>
+                    <p>Comprehensive social security and welfare programs.</p>
+                    <div class="details">
+                        • Pension Schemes<br>
+                        • Women Empowerment<br>
+                        • Rural Development<br>
+                        • Housing Schemes
+                    </div>
+                </div>
+
+                <div class="initiative-card">
+                    <i class="fas fa-solar-panel initiative-icon"></i>
+                    <h3>Green Initiatives</h3>
+                    <p>Sustainable development and environmental protection.</p>
+                    <div class="details">
+                        • Renewable Energy<br>
+                        • Green Tamil Nadu Mission<br>
+                        • Electric Vehicle Policy<br>
+                        • Waste Management
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <a href="https://tnsdg.tn.gov.in/" target="_blank" class="cta-button">
+                    Explore All Tamil Nadu Initiatives
+                    <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; Software Reuse - DA 1 by Gangireddy Madhurima(21MIS1155)</p>
+    </footer>
+</body>
+</html>
