@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG4 Implementation Analysis</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+   
+    <style>
+:root {
+    --primary-blue: #4f46e5;  /* Updated to indigo */
+    --secondary-blue: #818cf8;
+    --accent-green: #10b981;
+    --text-dark: #1f2937;
+    --text-light: #6b7280;
+    --bg-light: #f9fafb;
+    --warm-yellow: #fbbf24;
+    --book-brown: #92400e;
+}
+
+/* Floating Books Animation */
+@keyframes floatingBooks {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+/* Jumping Bench Animation */
+@keyframes jumpingBench {
+    0% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-15px) scale(1.05); }
+    100% { transform: translateY(0) scale(1); }
+}
+
+/* Writing Animation */
+@keyframes writing {
+    0% { width: 0; }
+    100% { width: 100%; }
+}
+
+/* Page Flip Animation */
+@keyframes pageFlip {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(180deg); }
+}
+
+/* Pencil Drawing Animation */
+@keyframes pencilDraw {
+    0% { stroke-dashoffset: 1000; }
+    100% { stroke-dashoffset: 0; }
+}
+
+/* Enhanced Header and Navigation */
+.edu-nav {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.nav-link {
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-link::before {
+    content: '📚';
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: top 0.3s ease;
+}
+
+.nav-link:hover::before {
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Section Cards with Book Animation */
+.section-card {
+    position: relative;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.section-card::before {
+    content: '📖';
+    position: absolute;
+    font-size: 2rem;
+    top: -100%;
+    right: 1rem;
+    animation: floatingBooks 3s ease-in-out infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.section-card:hover::before {
+    opacity: 1;
+    top: 1rem;
+}
+
+/* Enhanced Chart Containers */
+.chart-container {
+    position: relative;
+    padding: 2rem;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: transform 0.4s ease;
+}
+
+.chart-container::after {
+    content: '📊';
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    animation: jumpingBench 2s ease-in-out infinite;
+}
+
+/* Kerala Section with Writing Animation */
+.kerala-section h2 {
+    position: relative;
+    overflow: hidden;
+}
+
+.kerala-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--primary-blue);
+    animation: writing 2s ease-out forwards;
+}
+
+/* Initiative Cards with Flip Effect */
+.initiative-card {
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+}
+
+.initiative-card:hover {
+    transform: rotateX(10deg) translateY(-5px);
+}
+
+/* Contact Section Enhancement */
+.contact-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-section::before {
+    content: '✏️';
+    position: absolute;
+    top: -2rem;
+    left: -2rem;
+    font-size: 4rem;
+    opacity: 0.1;
+    animation: pencilDraw 3s linear infinite;
+}
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+    .section-card::before {
+        display: none;
+    }
+    
+    .chart-container::after {
+        font-size: 1rem;
+    }
+}
+
+/* Table Animations */
+.comparison-table tr {
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.comparison-table tr:hover {
+    transform: scale(1.01);
+    background-color: rgba(79, 70, 229, 0.1);
+}
+
+/* Stats Counter Animation */
+@keyframes countUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.stat-number {
+    animation: countUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Loading Progress Bar */
+@keyframes progressBar {
+    0% { width: 0; }
+    100% { width: 100%; }
+}
+
+.progress-bar {
+    height: 4px;
+    background: linear-gradient(to right, var(--primary-blue), var(--secondary-blue));
+    animation: progressBar 2s ease-out forwards;
+}
+</style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script src="C:\Users\madhu\OneDrive\Desktop\Reuse\chart.js"></script>
+    <script src="C:\Users\madhu\OneDrive\Desktop\Reuse\chart2.js"></script>
+    <script src="C:\Users\madhu\OneDrive\Desktop\Reuse\loader.js"></script>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-700 text-white py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="space-x-4">
+                <a href="https://sdgs.un.org/goals/goal4" target="_blank" class="px-4 py-2 bg-blue-600 rounded hover:bg-blue-500">SDG4 Official</a>
+                <a href="https://www.education.kerala.gov.in/" target="_blank" class="px-4 py-2 bg-blue-600 rounded hover:bg-blue-500">Kerala Education</a>
+                <a href="https://www.education.gov.in/en" target="_blank" class="px-4 py-2 bg-blue-600 rounded hover:bg-blue-500">India Education</a>
+            </div>
+            <a href="#contact" class="px-4 py-2 bg-green-600 rounded hover:bg-green-500">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="bg-blue-600 text-white py-12">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl font-bold text-center">Quality Education (SDG4)</h1>
+            <h2 class="text-2xl text-center mt-4">Implementation Analysis: Kerala, India, and Global Perspective</h2>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- [Previous sections remain exactly the same until the end of Global Comparison Section] -->
+        <!-- What is SDG4 Section -->
+        <section class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-blue-600">What is SDG4?</h2>
+            <div class="prose max-w-none">
+                <p class="text-gray-700 mb-4">
+                    SDG4 (Sustainable Development Goal 4) aims to "ensure inclusive and equitable quality education and promote lifelong learning opportunities for all" by 2030. This goal focuses on:
+                </p>
+                <ul class="list-disc pl-6 mb-4 text-gray-700">
+                    <li>Universal primary and secondary education</li>
+                    <li>Equal access to technical/vocational and higher education</li>
+                    <li>Relevant skills for decent work and employment opportunities</li>
+                    <li>Gender equality and inclusion in education</li>
+                    <li>Universal youth and adult literacy</li>
+                    <li>Increased focus on early childhood education and pre-primary education</li>
+                </ul>
+                <p class="text-gray-700">
+                    These targets aim to address existing inequalities in education and improve access to quality learning opportunities.
+                </p>
+            </div>
+        </section>
+        
+
+        <!-- Kerala Implementation Section -->
+        <section class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-blue-600">SDG4 in Kerala</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8"> <!-- 2-column grid layout for alignment -->
+                <div>
+                    <h3 class="text-2xl font-semibold mb-4">Key Initiatives</h3>
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="flex items-start">
+                            <span class="bg-green-500 rounded-full p-1 mr-3 mt-1"></span>
+                            <div>
+                                <strong>KITE (Kerala Infrastructure and Technology for Education)</strong>
+                                <p>Implementing technology-enabled learning in schools</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-green-500 rounded-full p-1 mr-3 mt-1"></span>
+                            <div>
+                                <strong>General Education Protection Mission</strong>
+                                <p>Comprehensive program to enhance public education system</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-green-500 rounded-full p-1 mr-3 mt-1"></span>
+                            <div>
+                                <strong>Samagra Shiksha Kerala (SSK)</strong>
+                                <p>Integrated scheme for school education from pre-school to senior secondary</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-semibold mb-4">Achievements</h3>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <ul class="space-y-2 text-gray-700">
+                            <li>• 94.2% literacy rate (highest in India)</li>
+                            <li>• 100% primary education enrollment</li>
+                            <li>• Gender parity in education</li>
+                            <li>• Lowest dropout rates in India</li>
+                            <li>• Universal access to digital education</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="mt-8">
+                <h3 class="text-2xl font-semibold mb-4">Implementation Challenges</h3>
+                <div class="grid md:grid-cols-3 gap-4"> <!-- 3-column grid layout -->
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-red-600 mb-2">Infrastructure</h4>
+                        <p class="text-gray-700">Maintaining and upgrading educational infrastructure in remote areas</p>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-red-600 mb-2">Digital Divide</h4>
+                        <p class="text-gray-700">Ensuring equal access to digital resources across all demographics</p>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-red-600 mb-2">Resource Allocation</h4>
+                        <p class="text-gray-700">Sustainable funding for various educational programs</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+
+        <!-- India Implementation Section -->
+        <div class="overflow-x-auto mt-8">
+            <h3 class="text-2xl font-semibold mb-4">India States SDG4 Comparison</h3>
+            <table class="min-w-full bg-white">
+                <thead>
+                    <tr class="bg-blue-100">
+                        <th class="py-3 px-4 text-left">State</th>
+                        <th class="py-3 px-4 text-left">SDG4 Score</th>
+                        <th class="py-3 px-4 text-left">Literacy Rate (%)</th>
+                        <th class="py-3 px-4 text-left">Primary Education Enrollment (%)</th>
+                        <th class="py-3 px-4 text-left">Digital Education Access (%)</th>
+                        <th class="py-3 px-4 text-left">Gender Parity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b">
+                        <td class="py-3 px-4 font-semibold">Kerala</td>
+                        <td class="py-3 px-4">90</td>
+                        <td class="py-3 px-4">94.2</td>
+                        <td class="py-3 px-4">100</td>
+                        <td class="py-3 px-4">98</td>
+                        <td class="py-3 px-4">Yes</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="py-3 px-4 font-semibold">Tamil Nadu</td>
+                        <td class="py-3 px-4">85</td>
+                        <td class="py-3 px-4">82.9</td>
+                        <td class="py-3 px-4">98</td>
+                        <td class="py-3 px-4">80</td>
+                        <td class="py-3 px-4">Yes</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="py-3 px-4 font-semibold">Maharashtra</td>
+                        <td class="py-3 px-4">82</td>
+                        <td class="py-3 px-4">80.3</td>
+                        <td class="py-3 px-4">96</td>
+                        <td class="py-3 px-4">75</td>
+                        <td class="py-3 px-4">Yes</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <section class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-semibold mb-4">State-wise Literacy Rate Comparison</h3>
+                <canvas id="stateLiteracyChart" width="400" height="200"></canvas>
+            </section>
+            
+        </div>
+        
+
+        <!-- Global Comparison Section -->
+        <section class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-blue-600">Global Perspective</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-4">India's Global Standing</h3>
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <ul class="space-y-4 text-gray-700">
+                            <li class="flex items-start">
+                                <span class="bg-blue-500 rounded-full p-1 mr-3 mt-1"></span>
+                                <div>
+                                    <strong>Global Rank: 117</strong>
+                                    <p>Based on SDG4 implementation progress</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-blue-500 rounded-full p-1 mr-3 mt-1"></span>
+                                <div>
+                                    <strong>Notable Achievement</strong>
+                                    <p>Significant progress in primary education enrollment</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-blue-500 rounded-full p-1 mr-3 mt-1"></span>
+                                <div>
+                                    <strong>Areas for Improvement</strong>
+                                    <p>Quality of education, infrastructure, and teacher training</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-semibold mb-4">Global Best Practices</h3>
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-blue-600">Finland</h4>
+                            <p class="text-gray-700">Equal access to quality education, highly qualified teachers</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-blue-600">South Korea</h4>
+                            <p class="text-gray-700">Strong emphasis on STEM education and technology integration</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-blue-600">Singapore</h4>
+                            <p class="text-gray-700">Excellence in teacher training and educational technology</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        
+<!-- Contact Section -->
+  <!-- Contact Section -->
+
+    </main>
+
+    <main class="container mx-auto p-6">
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- State Literacy Rate Chart -->
+            
+            
+            <!-- Global SDG4 Ranking Chart -->
+            <section class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-semibold text-indigo-700 mb-4">Global SDG4 Progress</h2>
+                <canvas id="globalSDG4Chart" width="400" height="200"></canvas>
+            </section>
+        </div>
+
+        <!-- Gender Parity Chart -->
+        <section class="bg-white p-6 rounded-lg shadow-lg mt-8">
+            <h2 class="text-2xl font-semibold text-indigo-700 mb-4">Gender Parity in Education</h2>
+            <div id="genderParityChart" style="width: 100%; height: 400px;"></div>
+        </section>
+    </main>
+   
+    <section id="contact" class="bg-white rounded-lg shadow-lg p-8">
+        <h2 class="text-3xl font-bold mb-6 text-center text-blue-600">Contact Information</h2>
+        <div class="bg-gray-50 p-6 rounded-lg shadow-md max-w-2xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <!-- Personal Details -->
+                <div class="flex-1">
+                    <h3 class="text-xl font-semibold mb-4 text-blue-600 border-b pb-2">Personal Details</h3>
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="flex items-center">
+                            <span class="font-semibold w-32">Name:</span>
+                            <span>Gangireddy Madhurima</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="font-semibold w-32">Reg Number:</span>
+                            <span>21MIS1155</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="font-semibold w-32">Mobile Number:</span>
+                            <span>8688713713</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="font-semibold w-32">Email ID:</span>
+                            <span>madhurimagangireddy@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Image -->
+                <div style="width: 200px; height: 289px;">
+                    <img src="C:\Users\madhu\OneDrive\Desktop\Main\documents of madhurima\Photo.jpg" 
+                         alt="Gangireddy Madhurima" 
+                         class="w-full h-full rounded-lg object-cover shadow-sm">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    
+    <script>
+        // Load Google Charts for Gender Parity
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['State', 'Gender Parity'],
+                ['Kerala', 1],
+                ['Tamil Nadu', 1],
+                ['Maharashtra', 0.9],
+                ['Gujarat', 0.85],
+                ['Uttar Pradesh', 0.75],
+                ['Rajasthan', 0.65]
+            ]);
+
+            var options = {
+                title: 'Gender Parity in Education (1 = Parity)',
+                pieHole: 0.4,
+                backgroundColor: '#f9fafb'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('genderParityChart'));
+            chart.draw(data, options);
+        }
+
+        // Chart.js for State Literacy
+        var ctx1 = document.getElementById('stateLiteracyChart').getContext('2d');
+        var stateLiteracyChart = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['Kerala', 'Tamil Nadu', 'Maharashtra', 'Gujarat', 'Uttar Pradesh', 'Rajasthan'],
+                datasets: [{
+                    label: 'Literacy Rate (%)',
+                    data: [94.2, 82.9, 80.3, 78.0, 67.7, 66.1],
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+        // Chart.js for Global SDG4 Ranking
+        var ctx2 = document.getElementById('globalSDG4Chart').getContext('2d');
+        var globalSDG4Chart = new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: ['Finland', 'South Korea', 'Singapore', 'Japan', 'Norway', 'Denmark', 'India'],
+                datasets: [{
+                    label: 'SDG4 Global Rank',
+                    data: [1, 2, 3, 5, 6, 7, 117],
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        reverse: true
+                    }
+                }
+            }
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-blue-600 text-white py-8 mt-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>© 2024 SDG4 Implementation Analysis</p>
+            <p class="mt-2">Data sources: UNESCO, NITI Aayog, Ministry of Education</p>
+        </div>
+    </footer>
+</body>
+</html>
